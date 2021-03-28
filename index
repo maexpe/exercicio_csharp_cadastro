@@ -1,0 +1,194 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Exercicio
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+        
+        private void LimparTela()
+
+        {
+            nomeTextBox.Clear();
+            enderecoTextBox.Clear();
+            telfixoTextBox.Clear();
+            telcelularTextBox.Clear();
+            emailTextBox.Clear();
+            salarioatualTextBox.Clear();
+            nomeTextBox.Focus();
+            
+        }
+
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void nomeTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void enderecoTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void telfixoTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void telcelularTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void emailTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void salarioatualTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void gravarButton_Click(object sender, EventArgs e)
+        {
+            if (nomeTextBox.Text.Trim() == "")
+            {
+                MessageBox.Show("O nome é obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                nomeTextBox.Focus();
+                nomeTextBox.SelectAll();
+                return;
+            }
+
+            if (enderecoTextBox.Text.Trim() == "")
+            {
+                MessageBox.Show("O endereço é obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                nomeTextBox.Focus();
+                nomeTextBox.SelectAll();
+                return;
+            }
+
+            if (telfixoTextBox.Text.Trim() == "")
+            {
+                MessageBox.Show("O telefone fixo é obrigatório", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                nomeTextBox.Focus();
+                nomeTextBox.SelectAll();
+                return;
+            }
+
+            if (telcelularTextBox.Text.Trim() == "")
+            {
+                MessageBox.Show("O telefone celular é obrigatório", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                nomeTextBox.Focus();
+                nomeTextBox.SelectAll();
+                return;
+            }
+
+            if (emailTextBox.Text.Trim() == "")
+            {
+                MessageBox.Show("O e-mail é obrigatório", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                nomeTextBox.Focus();
+                nomeTextBox.SelectAll();
+                return;
+            }
+
+            if (salarioatualTextBox.Text.Trim() == "")
+            {
+                MessageBox.Show("O salário atual é obrigatório", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                nomeTextBox.Focus();
+                nomeTextBox.SelectAll();
+                return;
+            }
+
+            int salarioatual;
+            int imposto = 0;
+
+            salarioatual = Convert.ToInt32(salarioatualTextBox.Text);
+
+            if(salarioatual <= 3000)
+            {
+                imposto = 0;
+            }
+
+            if(salarioatual > 3000 && salarioatual <= 5000)
+            {
+                imposto = salarioatual * 10/100;
+            }
+
+            if(salarioatual > 5000 && salarioatual <= 10000)
+            {
+                imposto = salarioatual * 15/100;
+            }
+
+            if(salarioatual > 10000)
+
+            {
+                imposto = salarioatual * 20/100;
+            }
+
+            string caminho = @"C:\Windows\Temp\Funcionarios.csv";
+
+            string registro = string.Format("{0};{1};{2};{3};{4};{5};{6}",
+                nomeTextBox.Text.ToUpper(), enderecoTextBox.Text.ToUpper(), 
+                telfixoTextBox.Text, telcelularTextBox.Text, emailTextBox.Text, 
+                salarioatualTextBox.Text, imposto);
+
+            if (!File.Exists(caminho))
+            {
+                StreamWriter sw1 = new StreamWriter(caminho, true);
+                sw1.WriteLine("Nome;Endereço;Telefone Fixo;Telefone Celular;E-mail;Salário Atual;Imposto");
+                sw1.Close();
+            }
+
+            StreamWriter sw = new StreamWriter(caminho, true);
+            sw.WriteLine(registro);
+            sw.Close();
+            MessageBox.Show("Cliente cadastrado com sucesso", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            LimparTela();
+            
+        }
+
+    }
+}
